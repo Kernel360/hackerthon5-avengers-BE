@@ -23,6 +23,13 @@ public class ReviewController {
         return ResponseEntity.ok(newReview);
     }
 
+    @PostMapping("/updateReview")
+    public ResponseEntity<Review> updateReview(@RequestBody Review review){
+        
+        return ResponseEntity.ok(review);
+    }
+
+
 
 
 
