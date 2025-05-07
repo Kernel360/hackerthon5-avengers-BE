@@ -1,11 +1,10 @@
 package com.hackerthon5.avengers_BE.review.controller;
 
+import com.hackerthon5.avengers_BE.review.domain.Review;
 import com.hackerthon5.avengers_BE.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/review")
@@ -16,6 +15,14 @@ public class ReviewController {
 
     @GetMapping("/test")
     public String testReview(){ return "Test SUCCESS"; }
+
+    @PostMapping("/createReview")
+    public ResponseEntity<Review> createReview(@RequestBody Review review){
+        Review newReview = reviewService.createReview(review);
+
+        return ResponseEntity.ok(newReview);
+    }
+
 
 
 

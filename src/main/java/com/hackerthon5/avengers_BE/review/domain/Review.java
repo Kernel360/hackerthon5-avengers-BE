@@ -1,12 +1,8 @@
 package com.hackerthon5.avengers_BE.review.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
@@ -19,10 +15,19 @@ public class Review {
     private long reviewId;
     private long memberId;
     private long movieId;
+    @Column(nullable = false, length = 20)
     private String title;
+
+    @Column(columnDefinition = "TEXT")
     private String content;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date postDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
+
+    @Column(nullable = false)
     private long memberRate;
 
 }
