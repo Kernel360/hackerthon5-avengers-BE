@@ -9,6 +9,7 @@ import com.hackerthon5.avengers_BE.movie.domain.Movie;
 import com.hackerthon5.avengers_BE.movie.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,10 @@ public class MoiveSaveScheduler {
     private final MovieRepository movieRepository;
     private final RestTemplate restTemplate = new RestTemplate();
 
-    private final String API_KEY = "aab8440059a271595dd697e252651fab";
     private final String BASE_URL = "https://api.themoviedb.org/3";
+
+    @Value("${my.api-key}")
+    private String apiKey;
 
     @Scheduled(fixedRate = 3600000)
     public void fetchMoviesandGenres() {
@@ -36,7 +39,7 @@ public class MoiveSaveScheduler {
         Map<Integer, String> genreMap = fetchGenres();
         log.info("장르 먼저 가져오기 성공");
 
-        String movieUrl = BASE_URL + "/movie/popular?language=ko-KR&page=1&api_key=" + API_KEY;
+        String movieUrl = BASE_URL + "/movie/popular?language=ko-KR&page=1&api_key=" + apiKey;
         MovieResponseDTO response = restTemplate.getForObject(movieUrl, MovieResponseDTO.class);
 
         if (response != null && response.results() != null) {
@@ -56,7 +59,7 @@ public class MoiveSaveScheduler {
 
 
     public Map<Integer, String> fetchGenres(){
-        String genreUrl = BASE_URL + "/genre/movie/list?language=ko&api_key=" + API_KEY;
+        String genreUrl = BASE_URL + "/genre/movie/list?language=ko&api_key=" + apiKey;
 
         GenreResponseDTO genreResponse = restTemplate.getForObject(genreUrl, GenreResponseDTO.class);
 
