@@ -52,6 +52,7 @@ public class MovieSaveScheduler {
                                 dto.title(),
                                 dto.overview(),
                                 dto.vote_average(),
+                                dto.rating(),
                                 dto.poster_path(),
                                 dto.release_date(),
                                 dto.genre_ids(),

@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,17 +28,28 @@ public class MovieServiceImpl implements MovieService{
         List<Movie> movies = movieRepository.findAll();
 
         List<MovieDTO> movieDTOS = movies.stream()
-                .map(movie -> new MovieDTO(
-                        movie.getTmdbId(),
-                        movie.getId(),
-                        movie.getTitle(),
-                        movie.getDescription(),
-                        movie.getVote_average(),
-                        movie.getPoster_path(),
-                        movie.getRelease_date(),
-                        List.of(),
-                        movie.getGenre()
-                ))
+                .map(movie -> {
+                    List<Review> reviews = reviewRepository.findByMovieId(movie.getId());
+                    double avgRating = 0;
+                    if (!reviews.isEmpty()) {
+                        avgRating = reviews.stream()
+                                .mapToDouble(Review::getMemberRate)
+                                .average()
+                                .orElse(0);
+                    }
+                    return new MovieDTO(
+                            movie.getTmdbId(),
+                            movie.getId(),
+                            movie.getTitle(),
+                            movie.getDescription(),
+                            movie.getVote_average(),
+                            avgRating, // 평균 리뷰 점수 추가
+                            movie.getPoster_path(),
+                            movie.getRelease_date(),
+                            List.of(),
+                            movie.getGenre()
+                    );
+                })
                 .toList();
 
         return new MovieResponseDTO(movieDTOS);
@@ -47,19 +60,25 @@ public class MovieServiceImpl implements MovieService{
         Movie movie = movieRepository.findById(movieId)
                 .orElseThrow(() -> new CustomException(ApiExceptionCode.MOVIE_NOT_FOUND));
 
+        List<Review> reviews = reviewRepository.findByMovieId(movieId);
+
+        double rating = 0;
+        for (Review review : reviews) {
+            rating += review.getMemberRate();
+        }
+
         MovieDTO movieDTO = new MovieDTO(
                 movie.getTmdbId(),
                 movie.getId(),
                 movie.getTitle(),
                 movie.getDescription(),
                 movie.getVote_average(),
+                rating/reviews.size(),
                 movie.getPoster_path(),
                 movie.getRelease_date(),
                 List.of(),
                 movie.getGenre()
         );
-
-        List<Review> reviews = reviewRepository.findByMovieId(movieId);
 
         MovieDetailResponse response = new MovieDetailResponse(movieDTO, reviews);
 

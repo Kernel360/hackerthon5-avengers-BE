@@ -11,6 +11,7 @@ public record MovieDTO (
         String title,
         String overview,
         double vote_average,
+        double rating,
         String poster_path,
         LocalDate release_date,
         List<Integer> genre_ids,
