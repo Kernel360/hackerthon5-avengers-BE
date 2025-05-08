@@ -1,10 +1,12 @@
 package com.hackerthon5.avengers_BE.movie.controller;
 
+import com.hackerthon5.avengers_BE.movie.dto.MovieDetailResponse;
 import com.hackerthon5.avengers_BE.movie.dto.MovieResponseDTO;
 import com.hackerthon5.avengers_BE.movie.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,4 +23,12 @@ public class MovieController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/{movieId}")
+    public ResponseEntity<MovieDetailResponse> getMovie(@PathVariable Long movieId) {
+        MovieDetailResponse response = movieService.getMovie(movieId);
+
+        return ResponseEntity.ok(response);
+    }
+
 }

@@ -40,6 +40,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'mysql:mysql-connector-java:8.0.33'  // 최신 버전 확인 가능
+
+	//Web Socket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
 
 tasks.named('test') {
