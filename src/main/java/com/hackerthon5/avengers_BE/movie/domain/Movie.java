@@ -1,6 +1,6 @@
 package com.hackerthon5.avengers_BE.movie.domain;
 
-import com.hackerthon5.avengers_BE.movie.DTO.MovieDTO;
+import com.hackerthon5.avengers_BE.movie.dto.MovieDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -40,8 +40,8 @@ public class Movie {
     private int tmdbId;
 
     @Builder
-    public Movie(int tmbdId, String title, String description, String genre, double vote_average, String poster_path, LocalDate release_date) {
-        this.tmdbId = tmbdId;
+    public Movie(int tmdbId, String title, String description, String genre, double vote_average, String poster_path, LocalDate release_date) {
+        this.tmdbId = tmdbId;
         this.title = title;
         this.description = description;
         this.genre = genre;
@@ -51,14 +51,10 @@ public class Movie {
     }
 
     public static Movie toEntity(MovieDTO dto, Map<Integer, String> genreMap){
-        String genreName = dto.genre_ids().stream()
-                .map(genreMap::get)
-                .filter(Objects::nonNull)
-                .findFirst()
-                .orElse("알수없음");
+        String genreName = dto.genre();
 
         return Movie.builder()
-                .tmbdId(dto.id())
+                .tmdbId(dto.id())
                 .title(dto.title())
                 .description(dto.overview())
                 .genre(genreName)

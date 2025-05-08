@@ -2,9 +2,10 @@ package com.hackerthon5.avengers_BE.movie.service;
 
 import com.hackerthon5.avengers_BE.common.ApiExceptionCode;
 import com.hackerthon5.avengers_BE.common.CustomException;
-import com.hackerthon5.avengers_BE.movie.DTO.GenreDTO;
-import com.hackerthon5.avengers_BE.movie.DTO.GenreResponseDTO;
-import com.hackerthon5.avengers_BE.movie.DTO.MovieResponseDTO;
+import com.hackerthon5.avengers_BE.movie.dto.GenreDTO;
+import com.hackerthon5.avengers_BE.movie.dto.GenreResponseDTO;
+import com.hackerthon5.avengers_BE.movie.dto.MovieDTO;
+import com.hackerthon5.avengers_BE.movie.dto.MovieResponseDTO;
 import com.hackerthon5.avengers_BE.movie.domain.Movie;
 import com.hackerthon5.avengers_BE.movie.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 @Service
 @EnableScheduling
 @RequiredArgsConstructor
-public class MoiveSaveScheduler {
+public class MovieSaveScheduler {
     private final MovieRepository movieRepository;
     private final RestTemplate restTemplate = new RestTemplate();
 
@@ -44,9 +45,24 @@ public class MoiveSaveScheduler {
 
         if (response != null && response.results() != null) {
             List<Movie> newMovies = response.results().stream()
-                    .map(dto -> Movie.toEntity(dto, genreMap))
-                    .filter(movie -> !movieRepository.existsByTmdbId(movie.getTmdbId())) // 중복 검사
+                    .map(dto -> {
+                        MovieDTO movie = new MovieDTO(
+                                dto.id(),
+                                dto.movieId(),
+                                dto.title(),
+                                dto.overview(),
+                                dto.vote_average(),
+                                dto.rating(),
+                                dto.poster_path(),
+                                dto.release_date(),
+                                dto.genre_ids(),
+                                (dto.genre_ids() != null && !dto.genre_ids().isEmpty()) ? genreMap.getOrDefault(dto.genre_ids().get(0), "기타") : "기타"
+                        );
+                        return Movie.toEntity(movie, genreMap);
+                    })
+                    .filter(movie -> !movieRepository.existsByTmdbId(movie.getTmdbId()))
                     .toList();
+
 
             if (!newMovies.isEmpty()) {
                 movieRepository.saveAll(newMovies);
