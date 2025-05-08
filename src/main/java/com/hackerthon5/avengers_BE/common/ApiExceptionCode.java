@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 public enum ApiExceptionCode {
 
     INVALID_INPUT("4001", "Invalid input provided.", HttpStatus.BAD_REQUEST),
+    INVALID_SEARCH_TPYE("4001", "지원하지 않는 검색 타입입니다.", HttpStatus.BAD_REQUEST),
     NOT_FOUND("4041", "Resource not found.", HttpStatus.NOT_FOUND),
     GENRE_NOT_FOUND("4042", "장르를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
     MOVIE_NOT_FOUND("4043", "영화를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),

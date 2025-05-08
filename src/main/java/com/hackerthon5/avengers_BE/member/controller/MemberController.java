@@ -29,7 +29,7 @@ public class MemberController {
     }
 
     @PostMapping("/user/{username}")
-    public ResponseEntity<String> getUserInfo(@PathVariable String username) {
+    public ResponseEntity<String> getUserInfo(@PathVariable("username") String username) {
         return ResponseEntity.ok("admin");
     }
 

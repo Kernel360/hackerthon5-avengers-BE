@@ -22,3 +22,4 @@ src/main/resources/application.yaml
 # ========== 환경 변수, 설정 ==========
 .env
 
+.gradle/
