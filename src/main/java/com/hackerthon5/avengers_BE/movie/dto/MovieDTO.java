@@ -7,9 +7,11 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record MovieDTO (
         int id, //  TMDB 고유 id
+        long movieId,
         String title,
         String overview,
         double vote_average,
+        double rating,
         String poster_path,
         LocalDate release_date,
         List<Integer> genre_ids,
