@@ -1,4 +1,4 @@
-package com.hackerthon5.avengers_BE.movie.DTO;
+package com.hackerthon5.avengers_BE.movie.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
