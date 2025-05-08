@@ -13,13 +13,7 @@ import lombok.*;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class MemberRequest {
-
-    @NotBlank
-    private String memberName;
-
-    @NotBlank
-    private String nickname;
+public class LoginRequest {
 
     @NotBlank
     @Email

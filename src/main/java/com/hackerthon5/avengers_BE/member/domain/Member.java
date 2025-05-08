@@ -22,7 +22,7 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
 
-    private String memberName;
+    private String role;
     private String nickname;
     private String email;
     private String password;
