@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/review")
 @RequiredArgsConstructor
@@ -23,10 +26,29 @@ public class ReviewController {
         return ResponseEntity.ok(newReview);
     }
 
+    @GetMapping("/getMovieReview")
+    public List<Review> getAllReview(@RequestParam long movieId){
+        return reviewService.getMovieReview(movieId);
+    }
+
+    @GetMapping("/getMyReview")
+    public List<Review> getMyReview(@RequestParam long memberId){
+        return reviewService.getMyReview(memberId);
+    }
+
     @PostMapping("/updateReview")
-    public ResponseEntity<Review> updateReview(@RequestBody Review review){
-        
-        return ResponseEntity.ok(review);
+    public ResponseEntity<Review> updateReview(@RequestBody Review reviewDTO){
+        //제목, 내용, 별점, 수정일자 수정하기
+        Review reReview = reviewService.updateReview(reviewDTO);
+        return ResponseEntity.ok(reReview);
+    }
+
+    @PostMapping("/deleteReview")
+    public String deleteReview(@RequestParam long reviewId){
+        System.out.println("지우려고 하는 리뷰 아이디 : " + reviewId);
+        reviewService.deleteReview(reviewId);
+
+        return "지움!";
     }
 
 
