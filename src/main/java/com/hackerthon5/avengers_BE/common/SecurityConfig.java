@@ -20,7 +20,7 @@ public class SecurityConfig {
                 .cors() // CORS 설정 활성화
                 .and()
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/index.html", "/js/**", "/css/**", "/api/movies/**", "/ws-chat/**").permitAll() // 정적 리소스는 인증 없이 허용
+                        .requestMatchers("/index.html", "/js/**", "/css/**", "/api/movies/**", "/ws-chat/**", "/review/**").permitAll() // 정적 리소스는 인증 없이 허용
                         .anyRequest().authenticated() // 그 외는 인증 필요
                 )
                 .formLogin().disable() // 폼 로그인 비활성화

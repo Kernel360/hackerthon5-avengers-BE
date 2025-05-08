@@ -12,6 +12,7 @@
 .gradle
 build.gradle
 
+
 # gradle wrapper
 !gradle/wrapper/gradle-wrapper.jar
 
@@ -20,3 +21,4 @@ build.gradle
 # ========== 환경 변수, 설정 ==========
 .env
 
+.gradle/
