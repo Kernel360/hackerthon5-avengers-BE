@@ -48,6 +48,7 @@ public class MovieSaveScheduler {
                     .map(dto -> {
                         MovieDTO movie = new MovieDTO(
                                 dto.id(),
+                                dto.movieId(),
                                 dto.title(),
                                 dto.overview(),
                                 dto.vote_average(),
