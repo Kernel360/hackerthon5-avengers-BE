@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity(name = "member")
 @Getter
@@ -25,5 +26,6 @@ public class Member {
     private String email;
     private String password;
     private LocalDateTime registeredAt;
+
 
 }
