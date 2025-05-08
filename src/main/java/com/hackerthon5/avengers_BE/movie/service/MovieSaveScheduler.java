@@ -34,7 +34,7 @@ public class MovieSaveScheduler {
     private String apiKey;
 
     @Scheduled(fixedRate = 3600000)
-    public void fetchMoviesandGenres() {
+    public void fetchMoviesandGenresFirst() {
         log.info("영화랑 장르 가져오기 시작");
 
         Map<Integer, String> genreMap = fetchGenres();
@@ -73,6 +73,85 @@ public class MovieSaveScheduler {
         }
     }
 
+    @Scheduled(fixedRate = 3600000)
+    public void fetchMoviesandGenresSecond() {
+        log.info("영화랑 장르 가져오기 시작");
+
+        Map<Integer, String> genreMap = fetchGenres();
+        log.info("장르 먼저 가져오기 성공");
+
+        String movieUrl = BASE_URL + "/movie/popular?language=ko-KR&page=2&api_key=" + apiKey;
+        MovieResponseDTO response = restTemplate.getForObject(movieUrl, MovieResponseDTO.class);
+
+        if (response != null && response.results() != null) {
+            List<Movie> newMovies = response.results().stream()
+                    .map(dto -> {
+                        MovieDTO movie = new MovieDTO(
+                                dto.id(),
+                                dto.movieId(),
+                                dto.title(),
+                                dto.overview(),
+                                dto.vote_average(),
+                                dto.rating(),
+                                dto.poster_path(),
+                                dto.release_date(),
+                                dto.genre_ids(),
+                                (dto.genre_ids() != null && !dto.genre_ids().isEmpty()) ? genreMap.getOrDefault(dto.genre_ids().get(0), "기타") : "기타"
+                        );
+                        return Movie.toEntity(movie, genreMap);
+                    })
+                    .filter(movie -> !movieRepository.existsByTmdbId(movie.getTmdbId()))
+                    .toList();
+
+
+            if (!newMovies.isEmpty()) {
+                movieRepository.saveAll(newMovies);
+                log.info("{}개의 새 영화 저장 성공", newMovies.size());
+            } else {
+                log.info("저장할 새 영화 없음");
+            }
+        }
+    }
+
+    @Scheduled(fixedRate = 3600000)
+    public void fetchMoviesandGenresThird() {
+        log.info("영화랑 장르 가져오기 시작");
+
+        Map<Integer, String> genreMap = fetchGenres();
+        log.info("장르 먼저 가져오기 성공");
+
+        String movieUrl = BASE_URL + "/movie/popular?language=ko-KR&page=3&api_key=" + apiKey;
+        MovieResponseDTO response = restTemplate.getForObject(movieUrl, MovieResponseDTO.class);
+
+        if (response != null && response.results() != null) {
+            List<Movie> newMovies = response.results().stream()
+                    .map(dto -> {
+                        MovieDTO movie = new MovieDTO(
+                                dto.id(),
+                                dto.movieId(),
+                                dto.title(),
+                                dto.overview(),
+                                dto.vote_average(),
+                                dto.rating(),
+                                dto.poster_path(),
+                                dto.release_date(),
+                                dto.genre_ids(),
+                                (dto.genre_ids() != null && !dto.genre_ids().isEmpty()) ? genreMap.getOrDefault(dto.genre_ids().get(0), "기타") : "기타"
+                        );
+                        return Movie.toEntity(movie, genreMap);
+                    })
+                    .filter(movie -> !movieRepository.existsByTmdbId(movie.getTmdbId()))
+                    .toList();
+
+
+            if (!newMovies.isEmpty()) {
+                movieRepository.saveAll(newMovies);
+                log.info("{}개의 새 영화 저장 성공", newMovies.size());
+            } else {
+                log.info("저장할 새 영화 없음");
+            }
+        }
+    }
 
     public Map<Integer, String> fetchGenres(){
         String genreUrl = BASE_URL + "/genre/movie/list?language=ko&api_key=" + apiKey;
