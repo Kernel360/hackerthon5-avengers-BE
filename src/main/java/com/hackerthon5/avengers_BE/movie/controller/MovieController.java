@@ -20,8 +20,8 @@ public class MovieController {
 
     @GetMapping
     public ResponseEntity<MovieResponseDTO> getMovies(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "20") int size,
             @ModelAttribute SearchDTO searchDTO) {
 
         Pageable pageable = PageRequest.of(page, size);
@@ -32,7 +32,7 @@ public class MovieController {
     }
 
     @GetMapping("/{movieId}")
-    public ResponseEntity<MovieDetailResponse> getMovie(@PathVariable Long movieId) {
+    public ResponseEntity<MovieDetailResponse> getMovie(@PathVariable("movieId") Long movieId) {
         MovieDetailResponse response = movieService.getMovie(movieId);
 
         return ResponseEntity.ok(response);
