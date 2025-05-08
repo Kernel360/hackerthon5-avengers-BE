@@ -33,7 +33,6 @@ public class MovieServiceImpl implements MovieService{
         Page<Movie> movies = switch(searchType){
             case "title" -> movieRepository.findByTitleContaining(keyword, pageable);
             case "description" -> movieRepository.findByDescriptionContaining(keyword, pageable);
-            case "all" -> movieRepository.findByTitleContainingOrDescriptionContaining(keyword, keyword, pageable);
             case "" -> movieRepository.findAll(pageable);
             default -> throw new CustomException(ApiExceptionCode.INVALID_SEARCH_TPYE);
         };
@@ -85,24 +84,33 @@ public class MovieServiceImpl implements MovieService{
         return new MoiveTop10ResponseDTO(movieDTOS);
     }
 
-    private List<MovieDTO> process(List<Movie> movies){
+    private List<MovieDTO> process(List<Movie> movies) {
+        List<Long> movieIds = movies.stream()
+                .map(Movie::getId)
+                .toList();
+
+        Map<Long, List<Review>> reviewMap = reviewRepository.findAllByMovieIds(movieIds)
+                .stream()
+                .collect(Collectors.groupingBy(Review::getMovieId));
+
         return movies.stream()
                 .map(movie -> {
-                    List<Review> reviews = reviewRepository.findByMovieId(movie.getId());
+                    List<Review> reviews = reviewMap.getOrDefault(movie.getId(), List.of());
                     double avgRating = reviews.stream()
                             .mapToDouble(Review::getMemberRate)
                             .average()
                             .orElse(0);
-                    return new MovieDTO(
+
+                    return new MovieDTO( // 👈 DTO 객체 생성 후 반환
                             movie.getTmdbId(),
                             movie.getId(),
                             movie.getTitle(),
                             movie.getDescription(),
                             movie.getVote_average(),
-                            avgRating,
+                            avgRating, // 계산된 평균 평점 사용
                             movie.getPoster_path(),
                             movie.getRelease_date(),
-                            List.of(),
+                            List.of(), // 빈 리스트 전달 (필드 설명 필요 시 주석 추가)
                             movie.getGenre()
                     );
                 })
