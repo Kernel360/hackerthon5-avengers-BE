@@ -12,8 +12,14 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    List<Review> findByMovieId(long movieId);
+    // 기존의 findByMovieId 메서드를 JPQL 쿼리로 변경
+    @Query("SELECT r FROM Review r WHERE r.movie.id = :movieId")
+    List<Review> findByMovieId(@Param("movieId") long movieId);
+
+    // 기존 메서드 유지
     List<Review> findByMemberId(long memberId);
+
+    // 기존 메서드 유지
     @Query("SELECT r FROM Review r WHERE r.movie.id IN :movieIds")
     List<Review> findAllByMovieIds(@Param("movieIds") List<Long> movieIds);
 }
