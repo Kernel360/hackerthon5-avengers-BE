@@ -49,9 +49,9 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getMyReview(long memberId) {
-        List<Review> MyRList = reviewRepository.findByMemberId(memberId);
-        return MyRList;
+    public List<Review> getMemberReview(long memberId) {
+        List<Review> memberRList = reviewRepository.findByMemberId(memberId);
+        return memberRList;
     }
 
 

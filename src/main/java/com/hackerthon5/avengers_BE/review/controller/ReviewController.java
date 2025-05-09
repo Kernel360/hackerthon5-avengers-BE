@@ -27,13 +27,13 @@ public class ReviewController {
     }
 
     @GetMapping("/getMovieReview")
-    public List<Review> getAllReview(@RequestParam long movieId){
+    public List<Review> getAllReview(@RequestParam("movieId") long movieId){
         return reviewService.getMovieReview(movieId);
     }
 
-    @GetMapping("/getMyReview")
-    public List<Review> getMyReview(@RequestParam long memberId){
-        return reviewService.getMyReview(memberId);
+    @GetMapping("/getMemberReview")
+    public List<Review> getMemberReview(@RequestParam("memberId") long memberId){
+        return reviewService.getMemberReview(memberId);
     }
 
     @PostMapping("/updateReview")

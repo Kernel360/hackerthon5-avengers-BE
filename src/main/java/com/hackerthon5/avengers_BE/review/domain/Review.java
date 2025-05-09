@@ -15,6 +15,7 @@ public class Review {
     private long reviewId;
     private long memberId;
     private long movieId;
+    private String nickname;
     @Column(nullable = false, length = 20)
     private String title;
 
