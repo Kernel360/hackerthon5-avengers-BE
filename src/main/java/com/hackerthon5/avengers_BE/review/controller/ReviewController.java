@@ -2,8 +2,11 @@ package com.hackerthon5.avengers_BE.review.controller;
 
 import com.hackerthon5.avengers_BE.review.domain.Review;
 import com.hackerthon5.avengers_BE.review.service.ReviewService;
+import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -32,8 +35,9 @@ public class ReviewController {
     }
 
     @GetMapping("/getMyReview")
-    public List<Review> getMyReview(@RequestParam long memberId){
-        return reviewService.getMyReview(memberId);
+    public List<Review> getMyReview(@AuthenticationPrincipal User user){
+
+        return reviewService.getMyReview(user);
     }
 
     @PostMapping("/updateReview")

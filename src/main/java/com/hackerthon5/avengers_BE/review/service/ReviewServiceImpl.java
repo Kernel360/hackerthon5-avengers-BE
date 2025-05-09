@@ -1,9 +1,13 @@
 package com.hackerthon5.avengers_BE.review.service;
 
+import com.hackerthon5.avengers_BE.member.domain.Member;
+import com.hackerthon5.avengers_BE.member.repository.MemberRepository;
 import com.hackerthon5.avengers_BE.review.domain.Review;
 import com.hackerthon5.avengers_BE.review.repository.ReviewRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
 
+    private final MemberRepository memberRepository;
     private final ReviewRepository reviewRepository;
 
     public Review createReview(Review review){
@@ -49,9 +54,13 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getMyReview(long memberId) {
-        List<Review> MyRList = reviewRepository.findByMemberId(memberId);
-        return MyRList;
+    public List<Review> getMyReview(User user) {
+
+        Member member = memberRepository.findByEmail(user.getUsername())
+           .orElseThrow(() -> new UsernameNotFoundException("유저정보가 없습니다."));
+
+        // 원래는 Entity를 Response 반환하면 안됨
+        return reviewRepository.findByMemberId(member.getMemberId());
     }
 
 
