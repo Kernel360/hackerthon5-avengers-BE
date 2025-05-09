@@ -79,6 +79,11 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public Review getOneReview(long reviewId) {
+        return reviewRepository.findByReviewId(reviewId);
+    }
+
+    @Override
     public List<Review> getMyReview(User user) {
 
         Member member = memberRepository.findByEmail(user.getUsername())
