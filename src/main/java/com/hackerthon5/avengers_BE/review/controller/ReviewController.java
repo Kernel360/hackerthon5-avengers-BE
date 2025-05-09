@@ -2,7 +2,6 @@ package com.hackerthon5.avengers_BE.review.controller;
 
 import com.hackerthon5.avengers_BE.review.domain.Review;
 import com.hackerthon5.avengers_BE.review.service.ReviewService;
-import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,7 +24,6 @@ public class ReviewController {
     @PostMapping("/createReview")
     public ResponseEntity<Review> createReview(@RequestBody Review review){
         Review newReview = reviewService.createReview(review);
-
         return ResponseEntity.ok(newReview);
     }
 
@@ -34,11 +32,16 @@ public class ReviewController {
         return reviewService.getMovieReview(movieId);
     }
 
+    @GetMapping("/getMyReview")
+    public List<Review> getMyReview(@AuthenticationPrincipal User user){
+
+        return reviewService.getMyReview(user);
+
+    }
 
     @GetMapping("/getMemberReview")
-    public List<Review> getMemberReview(@AuthenticationPrincipal User user){
-
-        return reviewService.getMemberReview(user);
+    public List<Review> getMemberReview(@RequestParam("memberId") long memberId){
+        return reviewService.getMemberReview(memberId);
 
     }
 
@@ -56,9 +59,5 @@ public class ReviewController {
 
         return "지움!";
     }
-
-
-
-
 
 }

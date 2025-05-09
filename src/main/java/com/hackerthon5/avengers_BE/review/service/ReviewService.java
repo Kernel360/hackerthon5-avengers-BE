@@ -13,7 +13,8 @@ public interface ReviewService {
     List<Review> getMovieReview(long movieId);
 
 
-    List<Review> getMemberReview(User user);
+    List<Review> getMemberReview(long memberId);
 
 
+    List<Review> getMyReview(User user);
 }
