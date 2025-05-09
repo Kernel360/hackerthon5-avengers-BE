@@ -1,4 +1,5 @@
 package com.hackerthon5.avengers_BE.review.service;
+import com.hackerthon5.avengers_BE.review.DTO.MyReviewDto;
 import com.hackerthon5.avengers_BE.review.domain.Review;
 import java.util.List;
 import org.springframework.security.core.userdetails.User;
@@ -16,5 +17,5 @@ public interface ReviewService {
     List<Review> getMemberReview(long memberId);
 
 
-    List<Review> getMyReview(User user);
+    List<MyReviewDto> getMyReview(User user);
 }
