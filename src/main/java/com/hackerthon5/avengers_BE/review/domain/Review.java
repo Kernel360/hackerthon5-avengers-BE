@@ -17,6 +17,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long reviewId;
     private long memberId;
+    private String nickname;
 
     // movieId 필드는 유지하되 DB에 저장되지 않도록 @Transient 추가
     @Transient
