@@ -1,5 +1,6 @@
 package com.hackerthon5.avengers_BE.review.controller;
 
+import com.hackerthon5.avengers_BE.review.DTO.MyReviewDto;
 import com.hackerthon5.avengers_BE.review.domain.Review;
 import com.hackerthon5.avengers_BE.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -33,10 +34,9 @@ public class ReviewController {
     }
 
     @GetMapping("/getMyReview")
-    public List<Review> getMyReview(@AuthenticationPrincipal User user){
-
-        return reviewService.getMyReview(user);
-
+    public ResponseEntity<List<MyReviewDto>> getMyReview(@AuthenticationPrincipal User user){
+        List<MyReviewDto> myReviews = reviewService.getMyReview(user);
+        return ResponseEntity.ok(myReviews);
     }
 
     @GetMapping("/getMemberReview")

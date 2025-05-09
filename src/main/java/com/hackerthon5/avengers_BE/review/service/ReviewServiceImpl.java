@@ -4,6 +4,7 @@ import com.hackerthon5.avengers_BE.member.domain.Member;
 import com.hackerthon5.avengers_BE.member.repository.MemberRepository;
 import com.hackerthon5.avengers_BE.movie.domain.Movie;
 import com.hackerthon5.avengers_BE.movie.repository.MovieRepository;
+import com.hackerthon5.avengers_BE.review.DTO.MyReviewDto;
 import com.hackerthon5.avengers_BE.review.domain.Review;
 import com.hackerthon5.avengers_BE.review.repository.ReviewRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -79,12 +81,16 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getMyReview(User user) {
+    public List<MyReviewDto> getMyReview(User user) {
 
         Member member = memberRepository.findByEmail(user.getUsername())
-           .orElseThrow(() -> new UsernameNotFoundException("유저정보가 없습니다."));
-        // 원래는 Entity를 Response 반환하면 안됨
-        return reviewRepository.findByMemberId(member.getMemberId());
+                .orElseThrow(() -> new UsernameNotFoundException("유저정보가 없습니다."));
+
+        List<Review> reviews = reviewRepository.findByMemberId(member.getMemberId());
+
+        return reviews.stream()
+                .map(MyReviewDto::new)
+                .collect(Collectors.toList());
 
     }
 
