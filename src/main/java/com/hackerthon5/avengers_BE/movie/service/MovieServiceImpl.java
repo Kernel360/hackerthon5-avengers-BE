@@ -27,13 +27,13 @@ public class MovieServiceImpl implements MovieService{
 
     @Override
     public MovieResponseDTO getMovies(Pageable pageable, SearchDTO searchDTO) {
-        String searchType = Optional.ofNullable(searchDTO.searchType()).orElse("all");
+        String searchType = Optional.ofNullable(searchDTO.searchType()).orElse("");
         String keyword = Optional.ofNullable(searchDTO.keyword()).orElse("");
 
         Page<Movie> movies = switch(searchType){
             case "title" -> movieRepository.findByTitleContaining(keyword, pageable);
             case "description" -> movieRepository.findByDescriptionContaining(keyword, pageable);
-            case "" -> movieRepository.findAll(pageable);
+            case "" -> movieRepository.findByTitleContainingOrDescriptionContaining(keyword, keyword, pageable);
             default -> throw new CustomException(ApiExceptionCode.INVALID_SEARCH_TPYE);
         };
 
