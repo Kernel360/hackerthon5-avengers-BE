@@ -27,8 +27,8 @@ Spring Security, JPA, JWT, 배포 등 기초 지식을 재검점하며 동료와
 
 | Category | Tech Stack |
 |:--------:|:-----------:|
-| **🚀 FE** | <img src="https://img.shields.io/badge/react-%2361DAFB.svg?&style=for-the-badge&logo=react&logoColor=black" /> <img src="https://img.shields.io/badge/next.js-%23000000.svg?&style=for-the-badge&logo=next.js&logoColor=white" /> |
-| **🚀 BE** | <img src="https://img.shields.io/badge/spring-%236DB33F.svg?&style=for-the-badge&logo=spring&logoColor=white" /> <img src="https://img.shields.io/badge/javascript-%23F7DF1E.svg?&style=for-the-badge&logo=javascript&logoColor=black" /> <img src="https://img.shields.io/badge/java-%23007396.svg?&style=for-the-badge&logo=java&logoColor=white" /> |
+| **🚀 FE** | <img src="https://img.shields.io/badge/react-%2361DAFB.svg?&style=for-the-badge&logo=react&logoColor=black" /> <img src="https://img.shields.io/badge/next.js-%23000000.svg?&style=for-the-badge&logo=next.js&logoColor=white" /> <img src="https://img.shields.io/badge/javascript-%23F7DF1E.svg?&style=for-the-badge&logo=javascript&logoColor=black" />|
+| **🚀 BE** | <img src="https://img.shields.io/badge/spring-%236DB33F.svg?&style=for-the-badge&logo=spring&logoColor=white" />  <img src="https://img.shields.io/badge/java-%23007396.svg?&style=for-the-badge&logo=java&logoColor=white" /> |
 | **☁️ Infra** | <img src="https://img.shields.io/badge/nginx-%23269539.svg?&style=for-the-badge&logo=nginx&logoColor=white" /> <img src="https://img.shields.io/badge/amazon%20aws-%23232F3E.svg?&style=for-the-badge&logo=amazon%20aws&logoColor=white" /> |
 | **📁 Data** | <img src="https://img.shields.io/badge/mysql-%234479A1.svg?&style=for-the-badge&logo=mysql&logoColor=white" /> |
 | **💬 ETC** | <img src="https://img.shields.io/badge/notion-%23000000.svg?&style=for-the-badge&logo=notion&logoColor=white" /> <img src="https://img.shields.io/badge/discord-%237289DA.svg?&style=for-the-badge&logo=discord&logoColor=white" /> <img src="https://img.shields.io/badge/git-%23F05032.svg?&style=for-the-badge&logo=git&logoColor=white" /> <img src="https://img.shields.io/badge/github-%23181717.svg?&style=for-the-badge&logo=github&logoColor=white" /> |
@@ -47,13 +47,18 @@ Spring Security, JPA, JWT, 배포 등 기초 지식을 재검점하며 동료와
 <br><br><br>
 
 
-### ⛹🏻‍♀️ 트러블 슈팅
+### 🖥 화면 구성
+| 메인화면 | 영화 채팅 | 리뷰 관리 |
+|:---:|:---:|:---:|
+|<img src="https://user-images.githubusercontent.com/80824750/208456048-acbf44a8-cd71-4132-b35a-500047adbe1c.gif" width="400"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="400"/>|
+
 
 <br><br><br>
 ### 🧑🏻‍💻 COLLABORATOR
 | 방지원(TL) | 박소윤 | 정수정 | 김진성 |
 |:------:|:------:|:------:|:------:|
-| <img src="https://github.com/user-attachments/assets/67384a6d-4198-446e-b3ae-78fe76dbc92a" alt="방지원" width="150"> | <img src="https://avatars.githubusercontent.com/u/61807816?v=4" alt="박소윤" width="150"> | <img src="" alt="정수정" width="150"> | <img src="" alt="김진성" width="150"> |
+| <img src="https://github.com/user-attachments/assets/67384a6d-4198-446e-b3ae-78fe76dbc92a" alt="방지원" width="150"> | <img src="https://avatars.githubusercontent.com/u/61807816?v=4" alt="박소윤" width="150"> | <img src="" alt="정수정" width="150"> | <img src="https://github.com/user-attachments/assets/27735c33-d073-4a2f-8508-ea479cb3fc6d" alt="김진성" width="150"> |
 | FE/BE | FE/BE | FE/BE | FE/BE |
 | [지언이](https://github.com/banxzxx) | [소유닝](https://github.com/ehouse16) | [수정이](https://github.com/SujeongJeong) | [진성이](https://github.com/JINS-DE) |
 |  | 영화 기능 담당 |  |
+
