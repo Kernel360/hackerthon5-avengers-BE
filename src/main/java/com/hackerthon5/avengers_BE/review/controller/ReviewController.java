@@ -44,6 +44,10 @@ public class ReviewController {
         return reviewService.getMemberReview(memberId);
 
     }
+    @GetMapping("/getOneReview/{reviewId}")
+    public Review getOneReview(@PathVariable("reviewId") long reviewId){
+        return reviewService.getOneReview(reviewId);
+    }
 
     @PostMapping("/updateReview")
     public ResponseEntity<Review> updateReview(@RequestBody Review reviewDTO){
@@ -53,7 +57,7 @@ public class ReviewController {
     }
 
     @PostMapping("/deleteReview")
-    public String deleteReview(@RequestParam long reviewId){
+    public String deleteReview(@RequestParam("reviewId") long reviewId){
         System.out.println("지우려고 하는 리뷰 아이디 : " + reviewId);
         reviewService.deleteReview(reviewId);
 

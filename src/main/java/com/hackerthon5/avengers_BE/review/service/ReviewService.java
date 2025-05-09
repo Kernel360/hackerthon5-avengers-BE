@@ -16,6 +16,8 @@ public interface ReviewService {
 
     List<Review> getMemberReview(long memberId);
 
+    Review getOneReview(long reviewId);
+
 
     List<MyReviewDto> getMyReview(User user);
 }
