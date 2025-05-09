@@ -1,10 +1,12 @@
 package com.hackerthon5.avengers_BE.movie.domain;
 
 import com.hackerthon5.avengers_BE.movie.dto.MovieDTO;
+import com.hackerthon5.avengers_BE.review.domain.Review;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -38,6 +40,9 @@ public class Movie {
 
     @Column(unique = true, nullable = false)
     private int tmdbId;
+
+    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
+    private List<Review> reviews;
 
     @Builder
     public Movie(int tmdbId, String title, String description, String genre, double vote_average, String poster_path, LocalDate release_date) {

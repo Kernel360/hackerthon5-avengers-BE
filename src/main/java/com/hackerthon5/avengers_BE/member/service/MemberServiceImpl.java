@@ -5,12 +5,15 @@ import com.hackerthon5.avengers_BE.member.DTO.SignupRequest;
 import com.hackerthon5.avengers_BE.member.domain.Member;
 import com.hackerthon5.avengers_BE.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -42,5 +45,14 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
 
         return "회원가입을 축하드립니다. 로그인해주세요.";
+    }
+
+
+    @Transactional(readOnly = true)
+    @Override
+    public Member myInfo(User user) {
+
+        return memberRepository.findByEmail(user.getUsername())
+           .orElseThrow(() -> new UsernameNotFoundException("유저정보가 없습니다."));
     }
 }

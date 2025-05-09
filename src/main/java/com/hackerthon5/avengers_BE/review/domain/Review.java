@@ -1,5 +1,6 @@
 package com.hackerthon5.avengers_BE.review.domain;
 
+import com.hackerthon5.avengers_BE.movie.domain.Movie;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,8 +15,11 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long reviewId;
     private long memberId;
-    private long movieId;
-    private String nickname;
+
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
+
     @Column(nullable = false, length = 20)
     private String title;
 

@@ -44,9 +44,9 @@ public class SecurityConfig {
                         .requestMatchers("/review/**").permitAll()
                         .requestMatchers("/ws/**").permitAll()
 
-                        // 리뷰 read : 사용자, 전체
-                        // 리뷰 create : 사용자
-                        // 리뷰 delete,update : 사용자
+                        // 리뷰 read : 사용자, 전체 getMovieReview
+                        // 리뷰 create : 사용자 getMyReview, createReview
+                        // 리뷰 delete,update : 사용자 updateReview, deleteReview
 //                        .requestMatchers("/api/user").hasAnyRole("USER", "ADMIN")
 //                        .requestMatchers("/api/user/*").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())
