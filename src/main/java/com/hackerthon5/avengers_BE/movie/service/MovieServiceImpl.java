@@ -91,7 +91,7 @@ public class MovieServiceImpl implements MovieService{
 
         Map<Long, List<Review>> reviewMap = reviewRepository.findAllByMovieIds(movieIds)
                 .stream()
-                .collect(Collectors.groupingBy(review -> review.getMovie().getId()));
+                .collect(Collectors.groupingBy(Review::getMovieId));
 
         return movies.stream()
                 .map(movie -> {

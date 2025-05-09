@@ -2,6 +2,8 @@ package com.hackerthon5.avengers_BE.review.service;
 
 import com.hackerthon5.avengers_BE.member.domain.Member;
 import com.hackerthon5.avengers_BE.member.repository.MemberRepository;
+import com.hackerthon5.avengers_BE.movie.domain.Movie;
+import com.hackerthon5.avengers_BE.movie.repository.MovieRepository;
 import com.hackerthon5.avengers_BE.review.domain.Review;
 import com.hackerthon5.avengers_BE.review.repository.ReviewRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -9,10 +11,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,9 +24,24 @@ public class ReviewServiceImpl implements ReviewService {
 
     private final MemberRepository memberRepository;
     private final ReviewRepository reviewRepository;
+    private final MovieRepository movieRepository;
 
-    public Review createReview(Review review){
+    @Transactional
+    public Review createReview(Review review) {
+        // 리뷰 생성 날짜 설정
         review.setPostDate(new Date());
+
+        // movieId를 기반으로 Movie 객체 찾기
+        if (review.getMovieId() > 0) {
+            Optional<Movie> movieOpt = movieRepository.findById(review.getMovieId());
+            if (movieOpt.isPresent()) {
+                review.setMovie(movieOpt.get());
+            } else {
+                throw new RuntimeException("Movie with ID " + review.getMovieId() + " not found");
+            }
+        }
+
+        // 저장 및 반환
         return reviewRepository.save(review);
     }
 
