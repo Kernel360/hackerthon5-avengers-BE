@@ -11,7 +11,8 @@
 /target/
 .gradle
 build.gradle
-
+src/main/resources/application.yml
+src/main/resources/application.yaml
 
 # gradle wrapper
 !gradle/wrapper/gradle-wrapper.jar

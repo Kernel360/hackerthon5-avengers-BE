@@ -54,13 +54,15 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getMyReview(User user) {
+
+    public List<Review> getMemberReview(User user) {
 
         Member member = memberRepository.findByEmail(user.getUsername())
            .orElseThrow(() -> new UsernameNotFoundException("유저정보가 없습니다."));
 
         // 원래는 Entity를 Response 반환하면 안됨
         return reviewRepository.findByMemberId(member.getMemberId());
+
     }
 
 
